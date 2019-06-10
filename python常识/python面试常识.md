@@ -41,3 +41,49 @@ sys.setrecursionlimit(1000000) #执行这个代码后，递归深度调整到100
 
 **其他办法：改成非递归**
 
+### 3.python的深浅拷贝
+
+#### 定义
+
+**深拷贝的时候python将所有数据在内存中新建了一份，所以如果你修改新的模版的时候老模版不会变。相反，在浅copy 的时候，python仅仅将最外层的内容在内存中新建了一份出来，第二层并没有在内存中新建，所以你修改了新模版，默认模版也被修改了**
+
+**下面我们先看一个具体的例子**
+
+#### 浅拷贝
+
+```python
+import copy
+wife = {'name':{'diaoq':30},'slaras':10000}
+hasband = copy.copy(wife) 
+print(hasband,wife)
+# {'name': {'diaoq': 30}, 'slaras': 10000}   {'name': {'diaoq': 30}, 'slaras': 10000}
+hasband['name']['diaoq']= 32
+hasband['slaras'] = 12000
+print(hasband)
+# {'slaras': 12000, 'name': {'diaoq': 32}}
+print(wife)
+# {'slaras': 12000, 'name': {'dioq': 32}}
+```
+
+#### 深拷贝
+
+```python
+import copy
+wife = {'name':{'diaoq':30},'slaras':10000}
+hasband = copy.deepcopy(wife) 
+print(hasband,wife)
+# {'name': {'diaoq': 30}, 'slaras': 10000}   {'name': {'diaoq': 30}, 'slaras': 10000}
+hasband['name']['diaoq']= 32
+hasband['slaras'] = 12000
+print(hasband)
+# {'slaras': 12000, 'name': {'diaoq': 32}}
+print(wife)
+# {'slaras': 10000, 'name': {'diaoq': 30}}
+```
+
+#### 总结
+
+***
+
+1. 浅拷贝时，修改的元素类型是可变类型时，他变我也变，修改的类型是不可变类型时，他变我不变
+2. 深拷贝时，他变我不变
