@@ -104,5 +104,34 @@ print(wife)
    print(foo(4,10))    # 14
    ```
 
-   
+###  5.  装饰器
+
+**装饰器(Decorators)是 Python 的一个重要部分。简单地说：他们是修改其他函数的功能的函数。他们有助于让我们的代码更简短，装饰器本质上是一个高阶函数，所以装饰器也可以有自己的参数**
+
+#### 日志装饰器
+
+**日志是装饰器运用的另一个亮点**
+
+```python
+from functools import wraps
+ 
+def logit(func):
+    @wraps(func)
+    def with_logging(*args, **kwargs):
+        print(func.__name__ + " was called")
+        return func(*args, **kwargs)
+    return with_logging
+ 
+@logit
+def addition_func(x):
+   """Do some math."""
+   return x + x
+
+result = addition_func(4)
+# Output: addition_func was called
+```
+
+#### wraps作用
+
+**被装饰后的函数其实已经是另外一个函数了（函数名等函数属性会发生改变），所以，Python的functools包中提供了一个叫wraps的decorator来消除这样的副作用。写一个decorator的时候，最好在实现之前加上functools的wrap，它能保留原有函数的名称和docstring**
 
